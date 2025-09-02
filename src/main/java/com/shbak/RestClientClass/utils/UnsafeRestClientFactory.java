@@ -23,24 +23,20 @@ public class UnsafeRestClientFactory {
                 .loadTrustMaterial(null, trustAll)
                 .build();
 
-        // Hostname 검증도 무시
         SSLConnectionSocketFactory sslSocketFactory =
                 SSLConnectionSocketFactoryBuilder.create()
                         .setSslContext(sslContext)
                         .setHostnameVerifier(NoopHostnameVerifier.INSTANCE)
                         .build();
 
-        // 커넥션 매니저에 적용
         var connManager = PoolingHttpClientConnectionManagerBuilder.create()
                 .setSSLSocketFactory(sslSocketFactory)
                 .build();
 
-        // HttpClient 생성
         CloseableHttpClient httpClient = HttpClients.custom()
                 .setConnectionManager(connManager)
                 .build();
 
-        // RestClient 빌드
         var requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
         return RestClient.builder()
                 .requestFactory(requestFactory)
