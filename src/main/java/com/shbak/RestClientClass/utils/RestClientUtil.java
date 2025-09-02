@@ -11,8 +11,8 @@ import static com.shbak.RestClientClass.dto.SslMode.*;
 public class RestClientUtil {
 
 
-    private final RestClient safeClient;    // SSL 적용
-    private final RestClient unsafeClient;  // SSL 무시
+    private final RestClient safeClient;    // SSL O
+    private final RestClient unsafeClient;  // SSL X (무시)
 
     public RestClientUtil() {
         try{
@@ -58,5 +58,4 @@ public class RestClientUtil {
     public <T> T post(String url, Object body, Class<T> responseType) {
         return post(url, body, responseType, DEFAULT);
     }
-
 }

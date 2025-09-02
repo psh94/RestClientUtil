@@ -13,34 +13,25 @@ public class RestClientTestService {
 
     public String testRestClientGetReq() {
         try{
-            // SSL 무시
             String result = restClientUtil.get("https://www.mxfleet.net/index.html", String.class, IGNORE);
             System.out.println("result: " + result);
 
-            // SSL 적용
-            // String result = restClientUtil.get("https://www.mxfleet.net/index.html");
-            // System.out.println("result: " + result);
 
             return result;
         } catch (Exception e) {
-            throw new RuntimeException("SSL Ignorance failed");
+            throw new RuntimeException("SSL Ignore failed");
         }
     }
 
     public String testRestclientPostReq() {
         var req = new PostRequest("post request test body: abcdefg...");
         try{
-            // SSL 무시
             String result = restClientUtil.post("https://postman-echo.com/post", req, String.class, IGNORE);
             System.out.println("result : " + result);
 
-            // SSL 적용
-            // String result = restClientUtil.post("https://postman-echo.com/post", req, String.class);
-            // System.out.println("result : " + result);
-
             return result;
         } catch (Exception e) {
-            throw new RuntimeException("SSL Ignorance failed");
+            throw new RuntimeException("SSL Ignore failed");
         }
 
     }
