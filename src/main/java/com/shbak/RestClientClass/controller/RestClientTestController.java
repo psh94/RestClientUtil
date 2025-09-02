@@ -16,7 +16,7 @@ public class RestClientTestController {
         return restClientTestService.testRestClientGetReq();
     }
 
-    @GetMapping("/test/restclient/post")
+    @GetMapping("/test/restclientpost")
     public String testRestclientPostReq() {
         return restClientTestService.testRestclientPostReq();
     }
