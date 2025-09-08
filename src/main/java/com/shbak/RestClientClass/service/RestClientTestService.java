@@ -13,9 +13,9 @@ public class RestClientTestService {
 
     public String testRestClientGetReq() {
         try{
-            return restClientUtil.get("https://www.mxfleet.net/index.html", String.class);
+            return restClientUtil.get("https://self-signed.badssl.com/", String.class);
         } catch (Exception e) {
-            throw new RuntimeException("SSL Ignore failed");
+            throw new RuntimeException("get request test failed");
         }
     }
 
@@ -24,7 +24,7 @@ public class RestClientTestService {
         try{
             return restClientUtil.post("https://postman-echo.com/post", req, String.class);
         } catch (Exception e) {
-            throw new RuntimeException("SSL Ignore failed");
+            throw new RuntimeException("post request test failed");
         }
     }
 
@@ -33,7 +33,7 @@ public class RestClientTestService {
         try{
             return restClientUtil.patch("https://httpbin.org/patch", req, String.class);
         } catch (Exception e) {
-            throw new RuntimeException("SSL Ignore failed");
+            throw new RuntimeException("patch request test failed");
         }
     }
 
@@ -41,7 +41,7 @@ public class RestClientTestService {
         try{
             return restClientUtil.delete("https://httpbin.org/delete", String.class);
         } catch (Exception e) {
-            throw new RuntimeException("SSL Ignore failed");
+            throw new RuntimeException("delete request test failed");
         }
     }
 }

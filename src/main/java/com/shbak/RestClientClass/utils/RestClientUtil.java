@@ -22,7 +22,7 @@ public class RestClientUtil {
 
     // -----------------------------------------------------------------------------------------------
     public <T> T get(String url, Class<T> responseType){
-        return pick().get()         // 선택된 RestClient로 get메서드 선택
+        return pick().get()             // 선택된 RestClient로 get메서드 선택
                 .uri(url)               // url 주소 입력
                 .retrieve()             // 해당 uri로 http 요청
                 .body(responseType);    // .body(): HttpMessage의 body만 반환
@@ -49,7 +49,6 @@ public class RestClientUtil {
     }
 
     // -----------------------------------------------------------------------------------------------
-
     public <T> T patch(String url, Object body, Class<T> responseType){
         return pick().patch()
                 .uri(url)
