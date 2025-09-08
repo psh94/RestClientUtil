@@ -1,42 +1,47 @@
 package com.shbak.RestClientClass.utils;
 
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
-import org.apache.hc.client5.http.ssl.ClientTlsStrategyBuilder;
-import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
-import org.apache.hc.core5.ssl.SSLContextBuilder;
-import org.apache.hc.core5.ssl.TrustStrategy;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLParameters;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.time.Duration;
 
 public class UnsafeRestClientFactory {
 
     public static RestClient create() {
         try{
-            TrustStrategy trustAll = (X509Certificate[] chain, String authType) -> true; // 모든 인증서를 무조건 신뢰(true 반환)
+            // 모든 인증서를 신뢰
+            TrustManager[] trustAll = new TrustManager[]{
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+                        @Override
+                        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+                        @Override
+                        public X509Certificate[] getAcceptedIssuers() {return new X509Certificate[0];}
+                    }
+            };
 
-            SSLContext sslContext = SSLContextBuilder.create()
-                    .loadTrustMaterial(null, trustAll)
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAll, new SecureRandom());
+
+            SSLParameters sslParams = new SSLParameters();
+            sslParams.setEndpointIdentificationAlgorithm(null);
+
+            HttpClient httpClient = HttpClient.newBuilder()
+                    .sslContext(sslContext)
+                    .sslParameters(sslParams)
                     .build();
 
-            var tlsStrategy = ClientTlsStrategyBuilder.create()
-                    .setSslContext(sslContext)
-                    .setHostnameVerifier(NoopHostnameVerifier.INSTANCE) // NoopHostnameVerifier: 모든 호스트 명을 무조건 신뢰
-                    .buildClassic();
-
-            var connManager = PoolingHttpClientConnectionManagerBuilder.create()
-                    .setTlsSocketStrategy(tlsStrategy)
-                    .build();
-
-            CloseableHttpClient httpClient = HttpClients.custom()
-                    .setConnectionManager(connManager)
-                    .build();
-
-            var requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+            var requestFactory = new JdkClientHttpRequestFactory(httpClient);
             return RestClient.builder()
                     .requestFactory(requestFactory)
                     .build();
