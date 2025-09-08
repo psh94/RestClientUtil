@@ -17,7 +17,7 @@ public class UnsafeRestClientFactory {
 
     public static RestClient create() {
         try{
-            TrustStrategy trustAll = (X509Certificate[] chain, String authType) -> true;
+            TrustStrategy trustAll = (X509Certificate[] chain, String authType) -> true; // 모든 인증서를 무조건 신뢰(true 반환)
 
             SSLContext sslContext = SSLContextBuilder.create()
                     .loadTrustMaterial(null, trustAll)
@@ -25,7 +25,7 @@ public class UnsafeRestClientFactory {
 
             var tlsStrategy = ClientTlsStrategyBuilder.create()
                     .setSslContext(sslContext)
-                    .setHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+                    .setHostnameVerifier(NoopHostnameVerifier.INSTANCE) // NoopHostnameVerifier: 모든 호스트 명을 무조건 신뢰
                     .buildClassic();
 
             var connManager = PoolingHttpClientConnectionManagerBuilder.create()

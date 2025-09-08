@@ -13,7 +13,7 @@ public class RestClientTestService {
 
     public String testRestClientGetReq() {
         try{
-            return restClientUtil.get("https://self-signed.badssl.com/", String.class);
+            return restClientUtil.get("https://www.mxfleet.net/index.html", String.class);
         } catch (Exception e) {
             throw new RuntimeException("get request test failed");
         }
@@ -22,7 +22,7 @@ public class RestClientTestService {
     public String testRestclientPostReq() {
         var req = new PostRequest("post request test body: post post ...");
         try{
-            return restClientUtil.post("https://postman-echo.com/post", req, String.class);
+            return restClientUtil.post("https://httpbin.org/post", req, String.class);
         } catch (Exception e) {
             throw new RuntimeException("post request test failed");
         }

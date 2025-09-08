@@ -8,7 +8,7 @@ public class RestClientUtil {
 
     private final RestClient safeClient;    // SSL O
     private final RestClient unsafeClient;  // SSL X (무시)
-    private final boolean ignoreSsl;
+    private final boolean ignoreSsl;        // SSL 무시 여부
 
     public RestClientUtil(RestClient safeClient, RestClient unsafeClient, boolean ignoreSsl) {
         this.safeClient = safeClient;

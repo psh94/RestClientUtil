@@ -10,7 +10,7 @@ import org.springframework.web.client.RestClient;
 @Configuration
 public class RestClientConfig {
 
-    @Value("${app.ssl.ignore:false}")   // application.yml / properties 에서 제어
+    @Value("${app.ssl.ignore:false}")   // application.properties 에서 제어, default값 false
     private boolean ignoreSsl;
 
     @Bean
