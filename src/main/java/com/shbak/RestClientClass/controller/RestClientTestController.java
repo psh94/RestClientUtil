@@ -20,4 +20,14 @@ public class RestClientTestController {
     public String testRestclientPostReq() {
         return restClientTestService.testRestclientPostReq();
     }
+
+    @GetMapping("/test/restclientpatch")
+    public String testRestclientPatchReq() {
+        return restClientTestService.testRestclientPatchReq();
+    }
+
+    @GetMapping("/test/restclientdelete")
+    public String testRestclientDeleteReq() {
+        return restClientTestService.testRestclientDeleteReq();
+    }
 }

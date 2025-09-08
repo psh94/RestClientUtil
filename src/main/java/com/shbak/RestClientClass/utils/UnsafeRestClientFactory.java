@@ -15,29 +15,33 @@ import java.security.cert.X509Certificate;
 
 public class UnsafeRestClientFactory {
 
-    public static RestClient create() throws Exception {
-        TrustStrategy trustAll = (X509Certificate[] chain, String authType) -> true;
+    public static RestClient create() {
+        try{
+            TrustStrategy trustAll = (X509Certificate[] chain, String authType) -> true;
 
-        SSLContext sslContext = SSLContextBuilder.create()
-                .loadTrustMaterial(null, trustAll)
-                .build();
+            SSLContext sslContext = SSLContextBuilder.create()
+                    .loadTrustMaterial(null, trustAll)
+                    .build();
 
-        var tlsStrategy = ClientTlsStrategyBuilder.create()
-                .setSslContext(sslContext)
-                .setHostnameVerifier(NoopHostnameVerifier.INSTANCE)
-                .buildClassic();
+            var tlsStrategy = ClientTlsStrategyBuilder.create()
+                    .setSslContext(sslContext)
+                    .setHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+                    .buildClassic();
 
-        var connManager = PoolingHttpClientConnectionManagerBuilder.create()
-                .setTlsSocketStrategy(tlsStrategy)
-                .build();
+            var connManager = PoolingHttpClientConnectionManagerBuilder.create()
+                    .setTlsSocketStrategy(tlsStrategy)
+                    .build();
 
-        CloseableHttpClient httpClient = HttpClients.custom()
-                .setConnectionManager(connManager)
-                .build();
+            CloseableHttpClient httpClient = HttpClients.custom()
+                    .setConnectionManager(connManager)
+                    .build();
 
-        var requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
-        return RestClient.builder()
-                .requestFactory(requestFactory)
-                .build();
+            var requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+            return RestClient.builder()
+                    .requestFactory(requestFactory)
+                    .build();
+        } catch(Exception e) {
+            throw new RuntimeException("create unsafeRestClientFactory failed");
+        }
     }
 }
