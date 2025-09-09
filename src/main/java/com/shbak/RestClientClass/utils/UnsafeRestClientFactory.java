@@ -8,11 +8,9 @@ import javax.net.ssl.SSLParameters;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.time.Duration;
 
 public class UnsafeRestClientFactory {
 
@@ -34,7 +32,7 @@ public class UnsafeRestClientFactory {
             sslContext.init(null, trustAll, new SecureRandom());
 
             SSLParameters sslParams = new SSLParameters();
-            sslParams.setEndpointIdentificationAlgorithm(null);
+            sslParams.setEndpointIdentificationAlgorithm(null); // 호스트네임 검증 비활성화
 
             HttpClient httpClient = HttpClient.newBuilder()
                     .sslContext(sslContext)
