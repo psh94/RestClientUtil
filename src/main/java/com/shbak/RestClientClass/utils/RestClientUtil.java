@@ -1,5 +1,6 @@
 package com.shbak.RestClientClass.utils;
 
+import lombok.Getter;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClient;

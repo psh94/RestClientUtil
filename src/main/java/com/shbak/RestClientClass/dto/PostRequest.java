@@ -1,4 +1,4 @@
-package com.shbak.RestClientClass.dto;
-
-public record PostRequest(String body) {
-}
+//package com.shbak.RestClientClass.dto;
+//
+//public record PostRequest(String body) {
+//}
