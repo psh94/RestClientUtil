@@ -49,6 +49,15 @@ public class RestClientUtil {
                 .body(responseType);
     }
 
+    public ResponseEntity<String> post(String url, Object body){
+        return pick().post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(body)
+                .retrieve()
+                .toEntity(String.class);
+    }
+
     // -----------------------------------------------------------------------------------------------
     public <T> T patch(String url, Object body, Class<T> responseType){
         return pick().patch()
@@ -58,11 +67,27 @@ public class RestClientUtil {
                 .retrieve()
                 .body(responseType);
     }
+
+    public ResponseEntity<String> patch(String url, Object body){
+        return pick().patch()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(body)
+                .retrieve()
+                .toEntity(String.class);
+    }
     // -----------------------------------------------------------------------------------------------
     public <T> T delete(String url, Class<T> responseType){
         return pick().delete()
                 .uri(url)
                 .retrieve()
                 .body(responseType);
+    }
+
+    public ResponseEntity<String> delete(String url){
+        return pick().delete()
+                .uri(url)
+                .retrieve()
+                .toEntity(String.class);
     }
 }
