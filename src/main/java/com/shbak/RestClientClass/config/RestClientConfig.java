@@ -2,6 +2,7 @@ package com.shbak.RestClientClass.config;
 
 import com.shbak.RestClientClass.utils.RestClientUtil;
 import com.shbak.RestClientClass.utils.UnsafeRestClientFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,8 @@ public class RestClientConfig {
     }
 
     @Bean
-    public RestClientUtil restClientUtil(RestClient safeRestClient, RestClient unsafeRestClient) {
+    public RestClientUtil restClientUtil(@Qualifier("safeRestClient") RestClient safeRestClient,
+                                         @Qualifier("unsafeRestClient") RestClient unsafeRestClient) {
         return new RestClientUtil(safeRestClient, unsafeRestClient, ignoreSsl);
     }
 }
