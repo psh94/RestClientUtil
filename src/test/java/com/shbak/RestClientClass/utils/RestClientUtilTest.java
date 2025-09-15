@@ -55,7 +55,7 @@ class RestClientUtilTest {
     void post_success() {
         ReflectionTestUtils.setField(util, "ignoreSsl", true);
         String url = "https://httpbin.org/post"; // SSL 테스트용 사이트
-        ResponseEntity<String> res = util.post(url, "post request test body: post post ...");
+        ResponseEntity<String> res = util.post(url, "post request test body");
 
         // 출력 (요청 결과와 상태)
         System.out.println("[URL] : " + url);
@@ -70,7 +70,7 @@ class RestClientUtilTest {
     void patch_success() {
         ReflectionTestUtils.setField(util, "ignoreSsl", true);
         String url = "https://httpbin.org/patch"; // SSL 테스트용 사이트
-        ResponseEntity<String> res = util.patch(url, "post request test body: post post ...");
+        ResponseEntity<String> res = util.patch(url, "patch request test body");
 
         // 출력 (요청 결과와 상태)
         System.out.println("[URL] : " + url);
